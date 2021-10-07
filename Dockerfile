@@ -1,4 +1,7 @@
 FROM tiangolo/uwsgi-nginx-flask:python3.8
+
+
+
 WORKDIR /app
 # Install Poetry
 RUN apt-get update \
