@@ -1,5 +1,25 @@
+import os
+
 from .dash import Dash
-import dash_html_components as html
+from dash import dcc, html
+from dash.dependencies import Input, Output, State
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import datetime
+
+from pathlib import Path
+from sqlalchemy import create_engine
+
+stop = round_time(datetime.datetime.now(),
+                  date_delta=datetime.timedelta(seconds=5))
+start = stop - datetime.timedelta(hours=1)
+query = gen_query_recent_messages(start.isoformat(), stop.isoformat())
+
+
+df = pd.read_sql_query(query, ids_engine)
+foo = str(df[1])
 
 app_layout = html.Div(
     children=[html.H1(children="Hello Dash")], className="container-fluid"
