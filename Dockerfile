@@ -10,7 +10,6 @@ RUN apt-get update \
     && cd /usr/local/bin \
     && ln -s /opt/poetry/bin/poetry \
     && poetry config virtualenvs.create false
-COPY ./ /app
 RUN poetry install --no-root
 # STATIC_PATH configures nginx to serve static assets directly
 ENV \
@@ -18,3 +17,4 @@ ENV \
     STATIC_PATH=/app/app/static \
     FLASK_ENV=production
 EXPOSE 80
+COPY ./ /app
