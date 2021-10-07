@@ -11,6 +11,11 @@ import datetime
 
 from pathlib import Path
 from sqlalchemy import create_engine
+from .setup import load_env_vars, make_emap_engine
+from .wrangle import gen_query_recent_messages
+
+load_env_vars()
+ids_engine = make_emap_engine('ids')
 
 stop = round_time(datetime.datetime.now(),
                   date_delta=datetime.timedelta(seconds=5))
@@ -19,10 +24,10 @@ query = gen_query_recent_messages(start.isoformat(), stop.isoformat())
 
 
 df = pd.read_sql_query(query, ids_engine)
-foo = str(df[1])
+foo = str(df.loc[1])
 
 app_layout = html.Div(
-    children=[html.H1(children="Hello Dash")], className="container-fluid"
+    children=[html.H1(children=f"Hello Dash {foo}")], className="container-fluid"
 )
 
 
